@@ -1,2 +1,2 @@
 # infinium
-Infinium from blockchain application
+Infinium frist blockchain application
