@@ -3,19 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package infinium;
+package controler;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -46,6 +50,14 @@ public class FXMLDocumentController implements Initializable {
      WebTarget target;
     @FXML
     private TextField docContact;
+    @FXML
+    private AnchorPane pharmacyPanel;
+    @FXML
+    private AnchorPane patientPanel;
+    @FXML
+    private AnchorPane labPanel;
+    @FXML
+    private AnchorPane hospitalPanel;
     private void post(String endPoint,JSONObject json){
         target=client.target("http://localhost:3000/api/"+endPoint);
         System.out.println("here"+json.toString());
@@ -58,7 +70,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         client =ClientBuilder.newClient();
-        MakeDoctorrListView();
+        //MakeDoctorrListView();
     }    
 
     @FXML
@@ -156,6 +168,56 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void deleteDoctor(ActionEvent event) {
+    }
+
+    @FXML
+    private void loadPharmacy(Event event) {
+        
+        try {
+                pharmacyPanel.getChildren().clear();
+               
+                pharmacyPanel.getChildren().add(FXMLLoader.load(getClass().getResource("/view/pharmacy.fxml")));
+                
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }        
+                
+    }
+
+    @FXML
+    private void loadPatient(Event event) {
+        try {
+                patientPanel.getChildren().clear();
+                
+                patientPanel.getChildren().add(FXMLLoader.load(getClass().getResource("/view/patient.fxml")));
+                
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }  
+    }
+
+    @FXML
+    private void loadLabs(Event event) {
+        try {
+                labPanel.getChildren().clear();
+                
+                labPanel.getChildren().add(FXMLLoader.load(getClass().getResource("/view/lab.fxml")));
+                
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }  
+    }
+
+    @FXML
+    private void loadHospital(Event event) {
+        try {
+                hospitalPanel.getChildren().clear();
+               
+                hospitalPanel.getChildren().add(FXMLLoader.load(getClass().getResource("/view/hospital.fxml")));
+                
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }  
     }
     
 }
