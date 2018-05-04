@@ -52,58 +52,57 @@ public class PharmacyController implements Initializable {
 private void MakePresciptionListView(String ID){
         pidSearch.getItems().clear();
         target=client.target("http://localhost:3000/api/TreatmentDrugs/"+ID);
-        String traders=target.request(MediaType.APPLICATION_JSON).get(String.class);
+        String pDetails=target.request(MediaType.APPLICATION_JSON).get(String.class);
         JSONParser parser = new JSONParser();
+        
+         JSONObject json1;
         try {
-            JSONArray jsonArray = (JSONArray) parser.parse(traders);
             
-            for(int i=0;i<jsonArray.size();i++){
-                JSONObject json1=(JSONObject) jsonArray.get(i);
-               
-            
-        VBox vb1=new VBox();
-        Label drID=new Label("Prescription ID: ");
-        Label drName=new Label("Name: ");
-        Label drF=new Label("Fromulae: ");
-        Label drMg=new Label("Mg ");
-        Label drDf=new Label("Dosage Form ");
-        Label drDd=new Label("Details: ");
-        
-        
-        vb1.getChildren().add(drID);
-        vb1.getChildren().add(drName);
-        vb1.getChildren().add(drF);
-        vb1.getChildren().add(drMg);
-        vb1.getChildren().add(drDf);
-        vb1.getChildren().add(drDd);
+            json1 = (JSONObject) parser.parse(pDetails);
        
-        
-        VBox vb=new VBox();
-        Label dID=new Label(json1.get("treatmentDrugsID").toString());
-        Label dN=new Label(json1.get("drugName").toString());
-        Label dF=new Label(json1.get("formulae").toString());
-        Label dMg=new Label(json1.get("mfg").toString());
-        Label dDf=new Label(json1.get("dosageForm").toString());
-        Label dD=new Label(json1.get("drugDetail").toString());
-       
-        
-        
-        
-        vb.getChildren().add(dID);
-        vb.getChildren().add(dN);
-        vb.getChildren().add(dF);
-        vb.getChildren().add(dMg);
-        vb.getChildren().add(dDf);
-        vb.getChildren().add(dD);
-        
-        
-        HBox hb=new HBox();
-         hb.getChildren().add(vb1);
-        hb.getChildren().add(vb);
-        
-        pidSearch.getItems().add(hb);
+            VBox vb1=new VBox();
+            Label drID=new Label("Prescription ID: ");
+            Label drName=new Label("Name: ");
+            Label drF=new Label("Fromulae: ");
+            Label drMg=new Label("Mg ");
+            Label drDf=new Label("Dosage Form ");
+            Label drDd=new Label("Details: ");
+
+
+            vb1.getChildren().add(drID);
+            vb1.getChildren().add(drName);
+            vb1.getChildren().add(drF);
+            vb1.getChildren().add(drMg);
+            vb1.getChildren().add(drDf);
+            vb1.getChildren().add(drDd);
+
+
+            VBox vb=new VBox();
+            Label dID=new Label(json1.get("treatmentDrugsID").toString());
+            Label dN=new Label(json1.get("drugName").toString());
+            Label dF=new Label(json1.get("formulae").toString());
+            Label dMg=new Label(json1.get("mfg").toString());
+            Label dDf=new Label(json1.get("dosageForm").toString());
+            Label dD=new Label(json1.get("drugDetail").toString());
+
+
+
+
+            vb.getChildren().add(dID);
+            vb.getChildren().add(dN);
+            vb.getChildren().add(dF);
+            vb.getChildren().add(dMg);
+            vb.getChildren().add(dDf);
+            vb.getChildren().add(dD);
+
+
+            HBox hb=new HBox();
+             hb.getChildren().add(vb1);
+            hb.getChildren().add(vb);
+
+            pidSearch.getItems().add(hb);
             
-        }
+        
             
         } catch (ParseException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
