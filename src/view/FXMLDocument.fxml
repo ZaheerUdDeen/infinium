@@ -33,7 +33,18 @@
                             </Tab>
                             <Tab text="Prescription">
                               <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TextField fx:id="pid" layoutX="120.0" layoutY="46.0" maxWidth="300.0" promptText="ID" />
+                                          <TextField fx:id="drugName" layoutX="120.0" layoutY="87.0" maxWidth="300.0" promptText="Drug Name" />
+                                          <TextField fx:id="formulae" layoutX="120.0" layoutY="132.0" maxWidth="300.0" promptText="Formulae" />
+                                          <TextField fx:id="mfg" layoutX="120.0" layoutY="187.0" maxWidth="300.0" promptText="mg" />
+                                          <TextField fx:id="dosageForm" layoutX="120.0" layoutY="237.0" maxWidth="300.0" promptText="dosage form" />
+                                          <TextField fx:id="drugDetails" layoutX="120.0" layoutY="283.0" maxWidth="300.0" promptText="Details" />
+                                          <Button layoutX="151.0" layoutY="347.0" mnemonicParsing="false" onAction="#addPrescription" prefHeight="32.0" prefWidth="55.0" text="Add" />
+                                          <ListView fx:id="prsListView" layoutX="350.0" layoutY="42.0" prefHeight="337.0" prefWidth="337.0" />
+                                       </children>
+                                    </AnchorPane>
                               </content>
                             </Tab>
                           </tabs>
