@@ -84,7 +84,8 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         client =ClientBuilder.newClient();
-        //MakeDoctorrListView();
+        MakeDoctorrListView();
+        MakePresciptionListView();
     }    
 
     @FXML
@@ -235,7 +236,7 @@ public class FXMLDocumentController implements Initializable {
     }
 private void MakePresciptionListView(){
         prsListView.getItems().clear();
-        target=client.target("http://localhost:3000/api/TreatmentDrug");
+        target=client.target("http://localhost:3000/api/TreatmentDrugs");
         String traders=target.request(MediaType.APPLICATION_JSON).get(String.class);
         JSONParser parser = new JSONParser();
         try {
@@ -247,7 +248,7 @@ private void MakePresciptionListView(){
             
         VBox vb1=new VBox();
         Label drID=new Label("Prescription ID: ");
-        Label drName=new Label("Name# ");
+        Label drName=new Label("Name: ");
         Label drF=new Label("Fromulae: ");
         Label drMg=new Label("Mg ");
         Label drDf=new Label("Dosage Form ");
@@ -297,7 +298,7 @@ private void MakePresciptionListView(){
     @FXML
     private void addPrescription(ActionEvent event) {
         JSONObject json = new JSONObject();
-         json.put("$class", "org.acme.TreatmentDrug");
+         json.put("$class", "org.acme.TreatmentDrugs");
          
          json.put("treatmentDrugsID", pid.getText().toString());
          json.put("drugName", drugName.getText().toString());
@@ -308,7 +309,7 @@ private void MakePresciptionListView(){
          json.put("drugDetail", drugDetails.getText().toString());
          
          
-        post("TreatmentDrug",json);
+        post("TreatmentDrugs",json);
         MakePresciptionListView();
     }
     
