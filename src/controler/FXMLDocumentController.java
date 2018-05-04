@@ -58,6 +58,20 @@ public class FXMLDocumentController implements Initializable {
     private AnchorPane labPanel;
     @FXML
     private AnchorPane hospitalPanel;
+    @FXML
+    private TextField pid;
+    @FXML
+    private TextField drugName;
+    @FXML
+    private TextField formulae;
+    @FXML
+    private TextField mfg;
+    @FXML
+    private TextField dosageForm;
+    @FXML
+    private TextField drugDetails;
+    @FXML
+    private ListView<HBox> prsListView;
     private void post(String endPoint,JSONObject json){
         target=client.target("http://localhost:3000/api/"+endPoint);
         System.out.println("here"+json.toString());
@@ -218,6 +232,84 @@ public class FXMLDocumentController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }  
+    }
+private void MakePresciptionListView(){
+        prsListView.getItems().clear();
+        target=client.target("http://localhost:3000/api/TreatmentDrug");
+        String traders=target.request(MediaType.APPLICATION_JSON).get(String.class);
+        JSONParser parser = new JSONParser();
+        try {
+            JSONArray jsonArray = (JSONArray) parser.parse(traders);
+            
+            for(int i=0;i<jsonArray.size();i++){
+                JSONObject json1=(JSONObject) jsonArray.get(i);
+               
+            
+        VBox vb1=new VBox();
+        Label drID=new Label("Prescription ID: ");
+        Label drName=new Label("Name# ");
+        Label drF=new Label("Fromulae: ");
+        Label drMg=new Label("Mg ");
+        Label drDf=new Label("Dosage Form ");
+        Label drDd=new Label("Details: ");
+        
+        
+        vb1.getChildren().add(drID);
+        vb1.getChildren().add(drName);
+        vb1.getChildren().add(drF);
+        vb1.getChildren().add(drMg);
+        vb1.getChildren().add(drDf);
+        vb1.getChildren().add(drDd);
+       
+        
+        VBox vb=new VBox();
+        Label dID=new Label(json1.get("treatmentDrugsID").toString());
+        Label dN=new Label(json1.get("drugName").toString());
+        Label dF=new Label(json1.get("formulae").toString());
+        Label dMg=new Label(json1.get("mfg").toString());
+        Label dDf=new Label(json1.get("dosageForm").toString());
+        Label dD=new Label(json1.get("drugDetail").toString());
+       
+        
+        
+        
+        vb.getChildren().add(dID);
+        vb.getChildren().add(dN);
+        vb.getChildren().add(dF);
+        vb.getChildren().add(dMg);
+        vb.getChildren().add(dDf);
+        vb.getChildren().add(dD);
+        
+        
+        HBox hb=new HBox();
+         hb.getChildren().add(vb1);
+        hb.getChildren().add(vb);
+        
+        prsListView.getItems().add(hb);
+            
+        }
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
+    }
+    @FXML
+    private void addPrescription(ActionEvent event) {
+        JSONObject json = new JSONObject();
+         json.put("$class", "org.acme.TreatmentDrug");
+         
+         json.put("treatmentDrugsID", pid.getText().toString());
+         json.put("drugName", drugName.getText().toString());
+         
+         json.put("formulae", formulae.getText().toString());
+         json.put("mfg", mfg.getText().toString());
+         json.put("dosageForm", dosageForm.getText().toString());
+         json.put("drugDetail", drugDetails.getText().toString());
+         
+         
+        post("TreatmentDrug",json);
+        MakePresciptionListView();
     }
     
 }
